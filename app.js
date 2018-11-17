@@ -12,8 +12,8 @@ var index = require('./routes/index');
 const db = require('./helper/db.js')();
 
 const options = {
-  cert: fs.readFileSync("/root/www/ssl/certificate.crt"),
-  key: fs.readFileSync("/root/www/ssl/private.key")
+  cert: fs.readFileSync("/root/swarm/ssl/certificate.crt"),
+  key: fs.readFileSync("/root/swarm/ssl/private.key")
 };
 server = require('http').createServer(app),
 io1 = require('socket.io').listen(server);
@@ -26,8 +26,12 @@ io = require('socket.io').listen(server2);
 io.on('connection', socket => {
   console.log('User connected')
  
+  socket.emit("video play",1)
+
+
   socket.on('disconnect', () => {
     console.log('user disconnected')
+
   })
 
 })
