@@ -10,6 +10,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser')
 var index = require('./routes/index');
 const db = require('./helper/db.js')();
+const  video = require("./middleware/video");
 
 const options = {
   cert: fs.readFileSync("/root/swarm/ssl/certificate.crt"),
@@ -44,7 +45,8 @@ app.use (function (req, res, next) {
   if (req.secure) {
           // request was via https, so do no special handling
           req.io = io;
-         
+          //req.video = video;
+          
           next();
   } else {
           // request was via http, so redirect to https
@@ -56,7 +58,7 @@ app.use (function (req, res, next) {
   }
 });
 
-
+app.use(video);
 app.use('/', index);
 
 
@@ -76,6 +78,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   const err = new Error('Not Found BASKAN');
   err.status = 404;
-  console.log(err)
+  //console.log(err)
   next(err.status+" HATA SAYFA YOK YADA ULAŞILMIYOR");
 });

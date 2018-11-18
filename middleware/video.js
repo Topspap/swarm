@@ -1,28 +1,18 @@
+const file = require('../model/Video.js');
 
-const videolar = (req,res,next)=>{
 
-    const fs = require('fs');
-    const file = 'video.mp4';
-    
-    const readStream = fs.createReadStream(file);
-    let progress = 0;
-    
-    fs.stat(file, (err, data) => {
-       const total = data.size;
-    
-        readStream.on('data', (chunk) => {
-            progress += chunk.length;
-            console.log(Math.round((100 * progress) / total) + '%');
-        });
-    
-        readStream.on('end', () => {
-            console.log('veri okunması bitti');
-            // console.log(progress);
-        });
-    });
+module.exports = (req,res,next)=>{
 
+        const promise = file.find({});
+
+            promise.then((data)=>{
+
+                req.video = data
+             // console.log(data)
+              next()
+            }).catch((err) => {
+                console.log(err)
+            })
 }
 
 
-
-module.exports = videolar
