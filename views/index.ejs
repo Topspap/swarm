@@ -132,18 +132,20 @@ var socket = io();
 
 
   function start (){
-
+    openFullscreen()
 
   var slider = document.getElementsByClassName("swiper-slide")
   var mySwiper = new Swiper('.swiper-container')
+  //mySwiper.noSwiping=true
+  mySwiper.allowTouchMove = false;
+  //mySwiper.allowSlideNext=false;  
  
         // video tagında boşluk bırakma yukarıda 
    
-
-
+   console.log()
 
           mySwiper.on('slideChange', function (s) {
-           
+         
             var say = mySwiper.activeIndex;
             var slideType = slider[say].firstChild.nodeName;
             var id =  $("#"+slider[say].firstChild.id).attr("id")  
@@ -211,8 +213,18 @@ socket.on("checkin",function(data){
 		  })
 
 
-
-   
+function openFullscreen() {
+var elem = document.querySelector("#swarm");
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+} 
 
   </script>
 </body>
